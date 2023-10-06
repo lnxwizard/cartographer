@@ -2,14 +2,22 @@ mod cli;
 
 use clap::Parser;
 use cli::Cli;
+use colored::Colorize;
 use rand::random;
 
-fn main() {
-    let _cli = Cli::parse();
+fn main() -> Result<(), ()> {
+    // parse arguments
+    let cli = Cli::parse();
 
+    // generate random 64-bit signed integers
     let seed64: i64 = random();
-    let seed32: i32 = random();
 
-    println!("64-bit Seed: {}", seed64);
-    println!("32-bit Seed: {}", seed32);
+    if !cli.color {
+        println!("{}: {}", "64-bit Seed".bold().green(), seed64);
+        return Ok(());
+    }
+
+    println!("{}: {}", "64-bit Seed", seed64);
+
+    Ok(())
 }
